@@ -1,4 +1,8 @@
-# React + TypeScript + Vite
+# QuizGenius
+
+Built with React + TypeScript + Vite
+
+This application provides an AI-powered quiz generation platform using Gemini AI and Firebase.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

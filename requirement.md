@@ -1,8 +1,8 @@
-Below is a detailed prototype development document for your AI Quiz App. This document outlines the overall architecture, pages, user flows, data models, and integration points. You can use it as a blueprint when building your prototype.
+Below is a detailed prototype development document for QuizGenius. This document outlines the overall architecture, pages, user flows, data models, and integration points. You can use it as a blueprint when building your prototype.
 
 ---
 
-# AI Quiz App Prototype Development Document
+# QuizGenius - AI Quiz App Prototype Development Document
 
 *Last updated: October 2023*
 
@@ -10,7 +10,7 @@ Below is a detailed prototype development document for your AI Quiz App. This do
 
 ## 1. Introduction
 
-The AI Quiz App allows users to generate quizzes dynamically by leveraging the Google Firebase ecosystem for authentication, database, and storage, while using Gemini AI to create quizzes based on user-uploaded project knowledge. Users log in, create projects, upload knowledge (text/documents), and then configure quiz parameters such as difficulty and number of questions. Once the quiz is generated, users can take the quiz and receive results.
+QuizGenius is an AI-powered quiz application that allows users to generate quizzes dynamically by leveraging the Google Firebase ecosystem for authentication, database, and storage, while using Gemini AI to create quizzes based on user-uploaded project knowledge. Users log in, create projects, upload knowledge (text/documents), and then configure quiz parameters such as difficulty and number of questions. Once the quiz is generated, users can take the quiz and receive results.
 
 ---
 
@@ -28,7 +28,7 @@ The AI Quiz App allows users to generate quizzes dynamically by leveraging the G
 ### 2.3. Data Flow Overview
 
 1. **User Authentication:**  
-   Uses Firebase Authentication for secure sign in/up.
+   Uses Firebase Authentication for secure sign in/up (Only Google Account Auth is supported).
 
 2. **Project Creation & Knowledge Upload:**  
    Projects are stored in Firestore with metadata. Uploaded knowledge files are held in Firebase Storage for later retrieval by the AI engine.
@@ -94,7 +94,7 @@ Below are detailed pages with UI components, user interaction points, and the sc
   
 - **Content:**  
   - App title/Logo
-  - Brief tagline/introduction: “Empower your learning by generating AI-driven quizzes from your project knowledge.”
+  - Brief tagline/introduction: "Empower your learning by generating AI-driven quizzes from your project knowledge."
   - Buttons:
     - **Login**
     - **Sign Up**
@@ -105,28 +105,17 @@ Below are detailed pages with UI components, user interaction points, and the sc
 
 ---
 
-### 4.2. Login Page / Sign-Up Page
+### 4.2. Login / Sign-Up
 
 - **Purpose:**  
-  Allow users to authenticate.
-  
-- **Content (for Login):**  
-  - Email and Password fields.
-  - “Forgot Password?” link.
-  - **Login** button.
-  - Option to redirect to the **Sign Up** page.
-
-- **Content (for Sign-Up):**  
-  - Fields: Name, Email, Password, Confirm Password.
-  - **Sign Up** button.
-  - Option to redirect to the **Login** page.
+  Allow users to authenticate using Google Account.
 
 - **Validation & UX:**  
-  - Inline error messages (e.g., invalid email format, password mismatch).
+  - Inline error messages
   - Loading spinners while authenticating.
 
 - **Firebase Utilization:**  
-  Use Firebase Authentication APIs (such as `signInWithEmailAndPassword` and `createUserWithEmailAndPassword`).
+  Use Firebase Authentication APIs
 
 ---
 
@@ -136,12 +125,11 @@ Below are detailed pages with UI components, user interaction points, and the sc
   Display a list of user projects and provide options for project management.
   
 - **Content:**  
-  - Welcome message (e.g., “Welcome, [User’s Name]”).
+  - Welcome message (e.g., "Welcome, [User's Name]").
   - Button for **New Project**.
   - A list/grid view of user projects with:
     - Project Title
     - Brief description/summary
-    - Status indicators (e.g., “Knowledge Uploaded”, “Quiz Generated”)
   - Navigation bar / sidebar linking to other parts (Profile, Settings, Help).
 
 - **Interactions:**  
@@ -149,7 +137,7 @@ Below are detailed pages with UI components, user interaction points, and the sc
   - **New Project** leads to the Create Project Page.
   
 - **Data Handling:**  
-  Retrieve projects from Firebase Firestore keyed to the user’s ID.
+  Retrieve projects from Firebase Firestore keyed to the user's ID.
 
 ---
 
@@ -166,7 +154,7 @@ Below are detailed pages with UI components, user interaction points, and the sc
   - **Create/Next** button (After project creation, the user is guided to the Knowledge Upload process).
 
 - **UX Consideration:**  
-  - Provide guidance text, e.g., “Please enter a name and description for your project. This will help in organizing your projects.”
+  - Provide guidance text, e.g., "Please enter a name and description for your project. This will help in organizing your projects."
   
 - **Data Handling:**  
   - On form submission, create a new document in the 'projects' collection in Firestore with initial metadata.
@@ -180,7 +168,7 @@ Below are detailed pages with UI components, user interaction points, and the sc
   
 - **Content:**  
   - Upload widget (drag and drop area and/or file selector).
-  - Instructions: “Upload files (PDF, DOCX, TXT) or paste text that describes your project’s knowledge base.”
+  - Instructions: "Upload files (PDF, DOCX, TXT) or paste text that describes your project's knowledge base."
   - Preview area (show uploaded file name and size).
   - A text area for directly pasting content.
   - **Upload** or **Save** button.
@@ -204,7 +192,7 @@ Below are detailed pages with UI components, user interaction points, and the sc
   - Dropdown or segmented control for **Difficulty Level**:
     - Options: **Easy**, **Medium**, **Hard**
   - Input for **Number of Questions** (e.g., select number from 5 to 50)
-  - Information text: “Each generated question will be a multiple-choice question with 4 options.”
+  - Information text: "Each generated question will be a multiple-choice question with 4 options."
   - (Optional) Additional parameters:
     - Timer per question
     - Option to randomize question order
@@ -225,19 +213,21 @@ Below are detailed pages with UI components, user interaction points, and the sc
   Show a real-time or progress indicator while the quiz is being generated via Gemini AI.
   
 - **Content:**  
-  - Loader / Progress bar indicating “Generating Quiz…”
-  - Message: “Please wait while we create your personalized quiz based on your uploaded project knowledge.”
+  - Loader / Progress bar indicating "Generating Quiz..."
+  - Message: "Please wait while we create your personalized quiz based on your uploaded project knowledge."
   - Option to cancel the process (if supported).
 
 - **Backend Integration:**  
   - Call a secured Firebase Cloud Function that:
-    - Retrieves the project knowledge.
     - Communicates with Gemini AI with the following parameters:
       \[
-      \text{Prompt} = \texttt{[Project Knowledge]} + \texttt{[Quiz configuration: difficulty, number of questions]}
+      \text{Prompt} = \texttt{[Project Knowledge]} + \texttt{[Quiz configuration]} + \texttt{"For each correct answer, provide a reason and reference specific sections from the knowledge materials."}
       \]
-    - Waits for the AI response.
-    - Saves the generated quiz (list of questions and 4 options per question) back to Firestore.
+    - Parse the response to extract:
+      - Questions and options
+      - Correct answer index
+      - Explanation reason
+      - Knowledge reference(s)
 
 - **Error Handling:**  
   - If the process fails, display a friendly error message with instructions to try again or contact support.
@@ -254,7 +244,7 @@ Below are detailed pages with UI components, user interaction points, and the sc
   - For each question:
     - The question text.
     - Four options (radio buttons or clickable cards).
-  - (Optional) A progress indicator showing “Question X of N.”
+  - (Optional) A progress indicator showing "Question X of N."
   - **Next** button (or auto-progress when an option is selected).
   - (Optional) Timer if a time limit is configured.
 
@@ -264,7 +254,7 @@ Below are detailed pages with UI components, user interaction points, and the sc
   - Ability to go back (if allowed) before final submission.
 
 - **Data Handling:**  
-  - Local state maintains the user’s responses until submission.
+  - Local state maintains the user's responses until submission.
   - After quiz completion, responses are sent to Firestore for record keeping.
 
 ---
@@ -275,15 +265,17 @@ Below are detailed pages with UI components, user interaction points, and the sc
   Provide feedback after quiz completion.
   
 - **Content:**  
-  - Overall score display (e.g., “You scored 8/10”).
+  - Overall score display (e.g., "You scored 8/10").
   - Breakdown by question:
-    - Question text.
-    - Selected answer vs. correct answer.
-    - Explanations (if available, or generated from AI).
+    - Question text
+    - Selected answer vs. correct answer
+    - Explanation reason for correct answer
+    - Reference to specific knowledge sources (e.g., "Based on Document A, Section 2")
   - Options to:
     - Retry the quiz.
     - Return to the Dashboard.
     - Review detailed feedback.
+    - View detailed source references
   - (Optional) A leaderboard or stats if the feature is extended.
 
 - **UX Consideration:**  
@@ -291,7 +283,7 @@ Below are detailed pages with UI components, user interaction points, and the sc
   - Use charts or progress bars for a dynamic results summary.
 
 - **Data Handling:**  
-  - Save quiz results in a ‘quizResults’ collection with the project ID, user ID, and timestamp.
+  - Save quiz results in a 'quizResults' collection with the project ID, user ID, and timestamp.
 
 ---
 
@@ -337,7 +329,11 @@ Each document representing a generated quiz:
 - `questions`: Array of question objects, where each question object includes:
   - `questionText`
   - `options`: Array of 4 options
-  - `correctAnswerIndex` (if predetermined; may be provided as info after taking the quiz)
+  - `correctAnswerIndex`
+  - `explanation`: {
+      `reason`: "Explanation why this is correct",
+      `references`: ["documentA.pdf#page3", "user_text#paragraph2"]
+    }
 - `generatedAt`
 - (Optional) `results` for attempt history
 
@@ -360,14 +356,15 @@ Each document representing a generated quiz:
 
 ### 6.2. Gemini AI Integration
 - **API Call:**  
-  Develop a secure Cloud Function that:
-  \[
-  \text{POST } \{ \text{Gemini API URL} \} \text{ with payload: \{ knowledge: [...], difficulty: ..., questions: ... \}}
-  \]
+  The prompt template should include explicit instructions for:
+  - Providing clear explanations for correct answers
+  - Citing specific references from the provided knowledge materials
+  - Formatting references as document names + location markers
+
 - **Handling Response:**  
-  Parse the response to extract questions and options. Validate the AI’s response format.
-- **Error Handling:**  
-  Handle API failures gracefully by relaying meaningful messages to the user.
+  - Validate that each question response contains:
+    - At least one reference to uploaded knowledge
+    - A coherent explanation linking the answer to the source material
 
 ---
 
@@ -390,7 +387,7 @@ Each document representing a generated quiz:
    - User Registration/Login.
    - Dashboard with Create Project functionality.
    - File/Text upload for project knowledge.
-   - Quiz configuration and generation integration with a dummy Gemini AI response (if the actual API isn’t available).
+   - Quiz configuration and generation integration with a dummy Gemini AI response (if the actual API isn't available).
    - Basic quiz taking and results page.
   
 2. **Development Phases:**
