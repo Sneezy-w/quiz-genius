@@ -20,7 +20,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <nav className="bg-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -84,11 +84,11 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto py-6 ">
+      <main className="max-w-7xl mx-auto py-6 w-full flex-grow">
         {children}
       </main>
 
-      <footer className="bg-white border-t">
+      <footer className="bg-white border-t mt-auto">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <p className="text-center text-gray-500 text-sm">
             © {new Date().getFullYear()} QuizGenius. All rights reserved.
