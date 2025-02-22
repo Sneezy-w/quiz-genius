@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { Project } from "../types";
-import { DocumentTextIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
+import { DocumentTextIcon, AcademicCapIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export const ProjectDetailsPage = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -59,6 +59,14 @@ export const ProjectDetailsPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Link
+        to="/dashboard"
+        className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 mb-4"
+      >
+        <ArrowLeftIcon className="h-5 w-5 mr-1" />
+        Back to Dashboard
+      </Link>
+
       <div className="lg:flex lg:items-center lg:justify-between">
         <div className="min-w-0 flex-1">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
@@ -78,7 +86,7 @@ export const ProjectDetailsPage = () => {
           </div>
         </div>
         <div className="mt-5 flex lg:ml-4 lg:mt-0">
-          <span className="sm:ml-3">
+          <span>
             <button
               type="button"
               onClick={() => navigate(`/projects/${projectId}/quiz/configure`)}
