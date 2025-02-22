@@ -1,6 +1,6 @@
 # QuizGenius - AI-Powered Quiz Generation Platform
 
-QuizGenius is an innovative web application developed during a hackathon that leverages AI to automatically generate quizzes from project documentation and learning materials. Built with React, Firebase, and Google's Gemini AI, it helps users create engaging learning experiences from their project knowledge.
+QuizGenius is an innovative web application developed during .devHacks 2025 that leverages AI to automatically generate quizzes from project documentation and learning materials. Built with React, Firebase, and Google's Gemini AI, it helps users create engaging learning experiences from their project knowledge.
 
 ## 🌟 Features
 
@@ -120,7 +120,7 @@ QuizGenius is an innovative web application developed during a hackathon that le
 6. Build and deploy Firebase Functions, firestore rules, and storage rules:
 
    ```bash
-   firebase deploy
+   firebase deploy --project <alias_or_project_id>
    ```
 
 7. Start the development server (in root directory):
@@ -197,4 +197,4 @@ This project was created during a hackathon and is available under the MIT Licen
 - Google Cloud Platform
 - Firebase Team
 - Gemini AI Team
-- Hackathon Organizers and Mentors
+- .devHacks 2025 Organizers and Mentors
