@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../services/firebase';
-import { Project } from '../types';
-import { DocumentTextIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../services/firebase";
+import { Project } from "../types";
+import { DocumentTextIcon, AcademicCapIcon } from "@heroicons/react/24/outline";
 
 export const ProjectDetailsPage = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -17,7 +17,7 @@ export const ProjectDetailsPage = () => {
       if (!projectId) return;
 
       try {
-        const projectRef = doc(db, 'projects', projectId);
+        const projectRef = doc(db, "projects", projectId);
         const projectSnap = await getDoc(projectRef);
 
         if (projectSnap.exists()) {
@@ -26,11 +26,11 @@ export const ProjectDetailsPage = () => {
             projectId: projectSnap.id,
           } as Project);
         } else {
-          setError('Project not found');
+          setError("Project not found");
         }
       } catch (error) {
-        console.error('Error fetching project:', error);
-        setError('Failed to load project details');
+        console.error("Error fetching project:", error);
+        setError("Failed to load project details");
       } finally {
         setLoading(false);
       }
@@ -67,11 +67,13 @@ export const ProjectDetailsPage = () => {
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             <div className="mt-2 flex items-center text-sm text-gray-500">
               <DocumentTextIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" />
-              {project.knowledgeURL ? 'Document uploaded' : 'No document uploaded'}
+              {project.knowledgeURL
+                ? "Document uploaded"
+                : "No document uploaded"}
             </div>
             <div className="mt-2 flex items-center text-sm text-gray-500">
               <AcademicCapIcon className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" />
-              {project.quizGenerated ? 'Quiz available' : 'No quiz generated'}
+              {project.quizGenerated ? "Quiz available" : "No quiz generated"}
             </div>
           </div>
         </div>
@@ -124,27 +126,39 @@ export const ProjectDetailsPage = () => {
         </div>
       )}
 
-      {project.quizGenerated && project.quizId && (
-        <div className="mt-8 bg-white shadow sm:rounded-lg">
-          <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-base font-semibold leading-6 text-gray-900">
-              Generated Quiz
-            </h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
-              <p>A quiz has been generated for this project.</p>
-            </div>
-            <div className="mt-3">
-              <button
-                onClick={() => navigate(`/projects/${projectId}/quiz/${project.quizId}`)}
-                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              >
-                <AcademicCapIcon className="-ml-0.5 mr-1.5 h-5 w-5" />
-                Take Quiz
-              </button>
+      {project.quizGenerated &&
+        project.quizIds &&
+        project.quizIds.length > 0 && (
+          <div className="mt-8 bg-white shadow sm:rounded-lg">
+            <div className="px-4 py-5 sm:p-6">
+              <h3 className="text-base font-semibold leading-6 text-gray-900">
+                Generated Quizzes
+              </h3>
+              <div className="mt-2 max-w-xl text-sm text-gray-500">
+                <p>
+                  {project.quizIds.length === 1
+                    ? "A quiz has been generated for this project."
+                    : `${project.quizIds.length} quizzes have been generated for this project.`}
+                </p>
+              </div>
+              <div className="mt-3 space-y-2">
+                {project.quizIds.map((quizId, index) => (
+                  <button
+                    key={quizId}
+                    onClick={() =>
+                      navigate(`/projects/${projectId}/quiz/${quizId}`)
+                    }
+                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mr-2"
+                  >
+                    <AcademicCapIcon className="-ml-0.5 mr-1.5 h-5 w-5" />
+                    Take Quiz{" "}
+                    {project.quizIds.length > 1 ? `#${index + 1}` : ""}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
-}; 
+};
