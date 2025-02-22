@@ -55,12 +55,12 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                           transform group-hover:translate-y-0 translate-y-[-10px]
                           before:absolute before:top-[-20px] before:left-0 before:w-full before:h-[20px] before:bg-transparent"
                       >
-                        <Link
+                        {/* <Link
                           to="/profile"
                           className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
                         >
                           Profile
-                        </Link>
+                        </Link> */}
                         <button
                           onClick={handleSignOut}
                           className="block w-full text-left px-4 py-3 text-gray-800 hover:bg-gray-100"
