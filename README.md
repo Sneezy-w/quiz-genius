@@ -190,10 +190,6 @@ The project includes security rules for both Firestore and Storage to ensure dat
 - [ ] Export quiz results
 - [ ] Mobile app version
 
-## 📄 License
-
-This project was created during a hackathon and is available under the MIT License.
-
 ## 🙏 Acknowledgments
 
 - Google Cloud Platform
