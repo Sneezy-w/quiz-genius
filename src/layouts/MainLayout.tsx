@@ -22,7 +22,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <nav className="bg-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
               <Link to="/" className="flex items-center">
@@ -53,7 +53,8 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                         className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible 
                           group-hover:visible group-hover:opacity-100 transition-all duration-300 ease-in-out
                           transform group-hover:translate-y-0 translate-y-[-10px]
-                          before:absolute before:top-[-20px] before:left-0 before:w-full before:h-[20px] before:bg-transparent"
+                          before:absolute before:top-[-20px] before:left-0 before:w-full before:h-[20px] before:bg-transparent
+                          z-50"
                       >
                         {/* <Link
                           to="/profile"
