@@ -1,8 +1,10 @@
+import { Timestamp } from "@firebase/firestore";
+
 export interface User {
   uid: string;
   name: string;
   email: string;
-  createdAt: Date;
+  createdAt: Timestamp;
   profilePicture?: string;
 }
 
@@ -12,8 +14,8 @@ export interface Project {
   projectName: string;
   description: string;
   knowledgeURL: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
   quizGenerated?: boolean;
   quizId?: string;
 }

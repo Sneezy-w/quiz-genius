@@ -40,27 +40,34 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                     Dashboard
                   </Link>
                   <div className="relative group">
-                    <button className="flex items-center space-x-2">
-                      <img
-                        src={currentUser.profilePicture || 'https://via.placeholder.com/40'}
-                        alt="Profile"
-                        className="w-8 h-8 rounded-full"
-                      />
-                      <span className="text-gray-700">{currentUser.name}</span>
-                    </button>
-                    <div className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl hidden group-hover:block">
-                      <Link
-                        to="/profile"
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Profile
-                      </Link>
-                      <button
-                        onClick={handleSignOut}
-                        className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
-                      >
-                        Sign Out
+                    <div className="relative inline-block">
+                      <button className="flex items-center space-x-2">
+                        <img
+                          src={currentUser.profilePicture || 'https://via.placeholder.com/40'}
+                          alt="Profile"
+                          className="w-8 h-8 rounded-full"
+                        />
+                        <span className="text-gray-700">{currentUser.name}</span>
                       </button>
+                      <div 
+                        className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-lg shadow-xl opacity-0 invisible 
+                          group-hover:visible group-hover:opacity-100 transition-all duration-300 ease-in-out
+                          transform group-hover:translate-y-0 translate-y-[-10px]
+                          before:absolute before:top-[-20px] before:left-0 before:w-full before:h-[20px] before:bg-transparent"
+                      >
+                        <Link
+                          to="/profile"
+                          className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
+                        >
+                          Profile
+                        </Link>
+                        <button
+                          onClick={handleSignOut}
+                          className="block w-full text-left px-4 py-3 text-gray-800 hover:bg-gray-100"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

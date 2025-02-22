@@ -65,8 +65,8 @@ export const CreateProjectPage = () => {
         projectName: formData.projectName,
         description: formData.description,
         knowledgeURL,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         quizGenerated: false,
       };
 
@@ -102,7 +102,7 @@ export const CreateProjectPage = () => {
             required
             value={formData.projectName}
             onChange={handleInputChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-1 px-2"
           />
         </div>
 
@@ -117,7 +117,7 @@ export const CreateProjectPage = () => {
             required
             value={formData.description}
             onChange={handleInputChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-1 px-2"
           />
         </div>
 
@@ -125,7 +125,29 @@ export const CreateProjectPage = () => {
           <label className="block text-sm font-medium text-gray-700">
             Project Knowledge
           </label>
-          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+          <div
+            className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-indigo-500"
+            onDragOver={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              e.currentTarget.classList.add('border-indigo-500');
+            }}
+            onDragLeave={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              e.currentTarget.classList.remove('border-indigo-500');
+            }}
+            onDrop={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              e.currentTarget.classList.remove('border-indigo-500');
+              if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                const fileList = e.dataTransfer.files;
+                const target = { files: fileList } as HTMLInputElement;
+                handleFileChange({ target, currentTarget: target, type: 'change' } as React.ChangeEvent<HTMLInputElement>);
+              }
+            }}
+          >
             <div className="space-y-1 text-center">
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
