@@ -26,7 +26,7 @@ QuizGenius is an innovative web application developed during a hackathon that le
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v20 or higher)
 - Yarn (v1.22 or higher)
 - Firebase CLI
 - Google Cloud account with Gemini API access
@@ -68,33 +68,13 @@ QuizGenius is an innovative web application developed during a hackathon that le
      - Firestore Database
      - Storage
      - Functions
-   - Get your project configuration (for .env file)
+   - Create a new web app in the project and get your app configuration (for .env file)
 
-5. **Setup Google Cloud & Gemini AI**:
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+5. **Gemini AI**:
+   <!-- - Go to [Google Cloud Console](https://console.cloud.google.com/)
    - Enable Cloud Functions API
-   - Create a service account and download credentials
-   - Get Gemini API key from [Google AI Studio](https://makersuite.google.com/)
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-VITE_FIREBASE_API_KEY=your_firebase_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-```
-
-Create a `.env` file in the functions directory:
-
-```env
-GEMINI_API_KEY=your_gemini_api_key
-GCLOUD_STORAGE_BUCKET=your_storage_bucket
-```
+   - Create a service account and download credentials -->
+   - Get Gemini API key from [Google AI Studio](https://aistudio.google.com/apikey/)
 
 ### Installation
 
@@ -119,40 +99,35 @@ GCLOUD_STORAGE_BUCKET=your_storage_bucket
    cd ..
    ```
 
-4. Build and deploy Firebase Functions:
+4. Create a `.env` file in the root directory:
 
-   ```bash
-   cd functions
-   npm run build
-   npm run deploy
-   cd ..
+   ```env
+   VITE_FIREBASE_API_KEY=your_firebase_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
    ```
 
-5. Start the development server (in root directory):
+5. Create a `.env` file in the functions directory:
+
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key
+   GCLOUD_STORAGE_BUCKET=your-firebase-storage-bucket
+   ```
+
+6. Build and deploy Firebase Functions, firestore rules, and storage rules:
+
+   ```bash
+   firebase deploy
+   ```
+
+7. Start the development server (in root directory):
 
    ```bash
    yarn dev
    ```
-
-### Development Commands
-
-Root directory (using yarn):
-
-```bash
-yarn dev          # Start development server
-yarn build        # Build the project
-yarn lint         # Run ESLint
-yarn test         # Run tests
-```
-
-Functions directory (using npm):
-
-```bash
-npm run build     # Build Cloud Functions
-npm run deploy    # Deploy Cloud Functions
-npm run serve     # Test Functions locally
-npm run logs      # View Functions logs
-```
 
 ## 📝 Usage
 
