@@ -181,7 +181,7 @@ The project uses Google's Gemini AI with the following capabilities:
 
 ## 🏗️ Project Structure
 
-\`\`\`
+```plaintext
 quiz-genius/
 ├── src/
 │   ├── components/     # Reusable UI components
@@ -193,7 +193,7 @@ quiz-genius/
 ├── functions/         # Firebase Cloud Functions
 ├── public/           # Static assets
 └── firebase.json     # Firebase configuration
-\`\`\`
+```
 
 ## 🛡️ Firebase Security Rules
 
