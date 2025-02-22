@@ -17,7 +17,7 @@ export interface Project {
   createdAt: Timestamp;
   updatedAt: Timestamp;
   quizGenerated?: boolean;
-  quizId?: string;
+  quizIds: string[];
 }
 
 export interface QuizQuestion {
@@ -34,7 +34,7 @@ export interface Quiz {
   quizId: string;
   projectId: string;
   config: {
-    difficulty: 'Easy' | 'Medium' | 'Hard';
+    difficulty: "Easy" | "Medium" | "Hard";
     numberOfQuestions: number;
   };
   questions: QuizQuestion[];
@@ -51,4 +51,4 @@ export interface QuizResult {
     isCorrect: boolean;
   }[];
   completedAt: Date;
-} 
+}
