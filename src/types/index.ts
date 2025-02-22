@@ -4,7 +4,7 @@ export interface User {
   uid: string;
   name: string;
   email: string;
-  createdAt: Timestamp;
+  createdAt: Date;
   profilePicture?: string;
 }
 
