@@ -24,6 +24,8 @@ export const DashboardPage = () => {
           projectId: doc.id,
         })) as Project[];
 
+        console.log(projectsData);
+
         setProjects(projectsData);
       } catch (error) {
         console.error('Error fetching projects:', error);
@@ -95,7 +97,7 @@ export const DashboardPage = () => {
               </div>
               <div className="bg-gray-50 px-6 py-3">
                 <div className="text-sm text-gray-500">
-                  Created {new Date(project.createdAt).toLocaleDateString()}
+                  Created {project.createdAt.toDate().toLocaleDateString()}
                 </div>
               </div>
             </div>
