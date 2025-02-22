@@ -96,3 +96,23 @@ button:focus-visible {
 .animate-fade-in-up {
   animation: fadeInUp 1s ease-out;
 }
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-wave {
+  animation: wave 3s ease-in-out infinite;
+}
+
+.bg-coral-500 {
+  background-color: #FF7F6B;
+}
