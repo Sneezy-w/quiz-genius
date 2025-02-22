@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 export const LandingPage = () => {
-  const { signInWithGoogle } = useAuth();
+  const { currentUser, signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white">
@@ -18,18 +19,21 @@ export const LandingPage = () => {
               configure quiz parameters, and let our AI create personalized learning experiences.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <button
-                onClick={signInWithGoogle}
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Get started with Google
-              </button>
-              <Link
-                to="/about"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Learn more <span aria-hidden="true">→</span>
-              </Link>
+              {currentUser ? (
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Go to Dashboard
+                </button>
+              ) : (
+                <button
+                  onClick={signInWithGoogle}
+                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Get started with Google
+                </button>
+              )}
             </div>
           </div>
         </div>
