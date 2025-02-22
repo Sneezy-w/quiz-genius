@@ -84,7 +84,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto py-6 w-full flex-grow">
+      <main className="mx-auto pt-6 w-full flex-grow">
         {children}
       </main>
 
