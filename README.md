@@ -37,11 +37,13 @@ QuizGenius is an innovative web application developed during a hackathon that le
 1. **Install Node.js**:
    - Download and install from [Node.js official website](https://nodejs.org/)
    - Verify installation:
+
      ```bash
      node --version
      ```
 
 2. **Install Yarn**:
+
    ```bash
    npm install -g yarn
    # Verify installation
@@ -49,6 +51,7 @@ QuizGenius is an innovative web application developed during a hackathon that le
    ```
 
 3. **Install Firebase CLI**:
+
    ```bash
    npm install -g firebase-tools
    # Login to Firebase
@@ -76,71 +79,80 @@ QuizGenius is an innovative web application developed during a hackathon that le
 ### Environment Variables
 
 Create a `.env` file in the root directory:
-\`\`\`
+
+```env
 VITE_FIREBASE_API_KEY=your_firebase_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
 VITE_FIREBASE_PROJECT_ID=your_project_id
 VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
-\`\`\`
+```
 
 Create a `.env` file in the functions directory:
-\`\`\`
+
+```env
 GEMINI_API_KEY=your_gemini_api_key
 GCLOUD_STORAGE_BUCKET=your_storage_bucket
-\`\`\`
+```
 
 ### Installation
 
 1. Clone the repository:
-   \`\`\`bash
+
+   ```bash
    git clone https://github.com/yourusername/quiz-genius.git
    cd quiz-genius
-   \`\`\`
+   ```
 
 2. Install root project dependencies (using yarn):
-   \`\`\`bash
+
+   ```bash
    yarn install
-   \`\`\`
+   ```
 
 3. Install Cloud Functions dependencies (using npm):
-   \`\`\`bash
+
+   ```bash
    cd functions
    npm install
    cd ..
-   \`\`\`
+   ```
 
 4. Build and deploy Firebase Functions:
-   \`\`\`bash
+
+   ```bash
    cd functions
    npm run build
    npm run deploy
    cd ..
-   \`\`\`
+   ```
 
 5. Start the development server (in root directory):
-   \`\`\`bash
+
+   ```bash
    yarn dev
-   \`\`\`
+   ```
 
 ### Development Commands
 
 Root directory (using yarn):
-\`\`\`bash
+
+```bash
 yarn dev          # Start development server
 yarn build        # Build the project
 yarn lint         # Run ESLint
 yarn test         # Run tests
-\`\`\`
+```
 
 Functions directory (using npm):
-\`\`\`bash
+
+```bash
 npm run build     # Build Cloud Functions
 npm run deploy    # Deploy Cloud Functions
 npm run serve     # Test Functions locally
 npm run logs      # View Functions logs
-\`\`\`
+```
 
 ## 📝 Usage
 
@@ -161,6 +173,7 @@ npm run logs      # View Functions logs
 ## 🤖 AI Integration
 
 The project uses Google's Gemini AI with the following capabilities:
+
 - Content understanding and analysis
 - Question generation with context awareness
 - Multiple choice option generation
