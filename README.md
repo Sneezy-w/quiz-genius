@@ -176,8 +176,10 @@ The project includes security rules for both Firestore and Storage to ensure dat
 
 ## 👥 Team
 
-- [Your Name] - Developer
-- [Other Team Members]
+- Jackie - [(Jackie-v2)](https://github.com/Jackie-v2)
+- David - [(Xiaoran Meng)](https://github.com/xiaoran-MENG)
+- Gigi - [(Gigi)](https://github.com/shop2008)
+- Hamilton - [(Sneezy-w)](https://github.com/Sneezy-w)
 
 ## 🎯 Future Improvements
 
