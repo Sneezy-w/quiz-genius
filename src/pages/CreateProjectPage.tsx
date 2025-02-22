@@ -15,6 +15,7 @@ export const CreateProjectPage = () => {
   });
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -65,8 +66,8 @@ export const CreateProjectPage = () => {
         projectName: formData.projectName,
         description: formData.description,
         knowledgeURL,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
         quizGenerated: false,
       };
 
@@ -122,25 +123,30 @@ export const CreateProjectPage = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Project Knowledge
           </label>
           <div
-            className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-indigo-500"
+            className={`
+              mt-1 flex flex-col items-center justify-center p-8 
+              border-2 border-dashed rounded-md transition-colors duration-200
+              ${isDragging ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300 hover:border-indigo-400'}
+              ${file ? 'bg-green-50' : 'bg-gray-50'}
+            `}
             onDragOver={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              e.currentTarget.classList.add('border-indigo-500');
+              setIsDragging(true);
             }}
             onDragLeave={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              e.currentTarget.classList.remove('border-indigo-500');
+              setIsDragging(false);
             }}
             onDrop={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              e.currentTarget.classList.remove('border-indigo-500');
+              setIsDragging(false);
               if (e.dataTransfer.files && e.dataTransfer.files[0]) {
                 const fileList = e.dataTransfer.files;
                 const target = { files: fileList } as HTMLInputElement;
@@ -148,46 +154,69 @@ export const CreateProjectPage = () => {
               }
             }}
           >
-            <div className="space-y-1 text-center">
-              <svg
-                className="mx-auto h-12 w-12 text-gray-400"
-                stroke="currentColor"
-                fill="none"
-                viewBox="0 0 48 48"
-                aria-hidden="true"
-              >
-                <path
-                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <div className="flex text-sm text-gray-600">
-                <label
-                  htmlFor="file-upload"
-                  className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                >
-                  <span>Upload a file</span>
-                  <input
-                    id="file-upload"
-                    name="file-upload"
-                    type="file"
-                    className="sr-only"
-                    onChange={handleFileChange}
-                    accept=".txt,.pdf,.docx"
-                  />
-                </label>
-                <p className="pl-1">or drag and drop</p>
+            {!file ? (
+              <>
+                <div className="flex items-center justify-center">
+                  <svg
+                    className="w-12 h-12 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
+                  </svg>
+                </div>
+                <div className="mt-4 flex flex-col items-center text-center">
+                  <label
+                    htmlFor="file-upload"
+                    className="px-4 py-2 rounded-md bg-white border border-gray-300 cursor-pointer hover:border-indigo-500 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <span>Select file</span>
+                    <input
+                      id="file-upload"
+                      name="file-upload"
+                      type="file"
+                      className="sr-only"
+                      onChange={handleFileChange}
+                      accept=".txt,.pdf,.docx"
+                    />
+                  </label>
+                  <p className="mt-2 text-sm text-gray-500">
+                    or drag and drop here
+                  </p>
+                  <p className="mt-1 text-xs text-gray-400">
+                    TXT, PDF, DOCX (max 5MB)
+                  </p>
+                </div>
+              </>
+            ) : (
+              <div className="w-full">
+                <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
+                  <div className="flex items-center">
+                    <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="ml-2 text-sm text-gray-700">{file.name}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setFile(null)}
+                    className="px-3 py-1 text-sm text-red-500 border border-red-500 rounded-md hover:bg-red-50 transition-colors duration-200"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
-              <p className="text-xs text-gray-500">
-                TXT, PDF, DOCX up to 5MB
-              </p>
-            </div>
+            )}
           </div>
-          {file && (
-            <p className="mt-2 text-sm text-gray-500">
-              Selected file: {file.name}
+          {error && (
+            <p className="mt-2 text-sm text-red-600">
+              {error}
             </p>
           )}
         </div>
